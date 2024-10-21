@@ -1,71 +1,155 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using test1.Data;
-using test1.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
+using test1.Models;
 
 namespace test1.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
-    public class TodoItemsController : ControllerBase
+    [Route("api/[controller]")]
+    [Authorize] // Apply authorization to the entire controller
+    public class TodoController : ControllerBase
     {
-        private readonly TodoDbContext dbContext;
-
-        public TodoItemsController(TodoDbContext dbContext)
+        // For simplicity, we'll use an in-memory list to store todo items.
+        private static List<TodoItem> _todoItems = new List<TodoItem>
         {
-            this.dbContext = dbContext;
-        }
+            new TodoItem { Id = Guid.NewGuid(), Title = "Task 1", IsCompleted = false, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now },
+            new TodoItem { Id = Guid.NewGuid(), Title = "Task 2", IsCompleted = true, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now }
+        };
 
-        [HttpGet]
-        public IActionResult GetAllTodoItems()
+        // GET: api/todo/all
+        [HttpGet("all")]
+        public ActionResult<ApiResponse<List<TodoItem>>> GetAllTodoItems()
         {
-            var todoItems = dbContext.TodoItems.ToList();
-            return Ok(todoItems);
-        }
-
-        [HttpPost]
-        public IActionResult AddTodoItem(TodoItemDTO request)
-        {
-            // Validate the request (optional, but recommended)
-            if (request == null || string.IsNullOrEmpty(request.Title))
+            var response = new ApiResponse<List<TodoItem>>
             {
-                return BadRequest("Title is required.");
-            }
-
-            var domainModelTodoItem = new TodoItem
-            {
-                Id = Guid.NewGuid(), // Assuming you use Guid for Id, change to int if necessary
-                Title = request.Title,
-                Description = request.Description,
-                IsCompleted = request.IsCompleted,
-                DueDate = request.DueDate,
-                CreatedAt = DateTime.UtcNow, // Use UTC for consistency
-                UpdatedAt = DateTime.UtcNow // Use UTC for consistency
-                // UserId can be set if needed
+                Message = "Todo items retrieved successfully",
+                Success = true,
+                Data = _todoItems.ToList()
             };
-
-            dbContext.TodoItems.Add(domainModelTodoItem);
-            dbContext.SaveChanges();
-
-            return CreatedAtAction(nameof(GetAllTodoItems), new { id = domainModelTodoItem.Id }, domainModelTodoItem);
+            return Ok(response);
         }
 
-        [HttpDelete("{id:guid}")]
-        public IActionResult DeleteTodoItem(Guid id)
+        // GET: api/todo/{id}
+        [HttpGet("{id}")]
+        public ActionResult<ApiResponse<TodoItem>> GetTodoItemById(Guid id)
         {
-            var todoItem = dbContext.TodoItems.Find(id);
+            var todoItem = _todoItems.FirstOrDefault(t => t.Id == id);
 
             if (todoItem == null)
             {
-                return NotFound($"Todo item with ID {id} not found.");
+                return NotFound(new ApiResponse<TodoItem>
+                {
+                    Message = "Todo item not found",
+                    Success = false,
+                    Data = null
+                });
             }
 
-            dbContext.TodoItems.Remove(todoItem);
-            dbContext.SaveChanges();
+            return Ok(new ApiResponse<TodoItem>
+            {
+                Message = "Todo item retrieved successfully",
+                Success = true,
+                Data = todoItem
+            });
+        }
 
-            return NoContent(); // 204 No Content
+        // POST: api/todo/create
+        [HttpPost("create")]
+        public ActionResult<ApiResponse<TodoItem>> CreateTodoItem([FromBody] AddTodo newTodo)
+        {
+            // Create a new TodoItem and associate it with the current user
+            var todoItem = new TodoItem
+            {
+                Id = Guid.NewGuid(),
+                Title = newTodo.Title,
+                Description = newTodo.Description,
+                IsCompleted = false,
+                CreatedAt = DateTime.Now,
+                UpdatedAt = DateTime.Now,
+                UserId = GetCurrentUserId() // Associate with the current user's ID
+            };
+
+            _todoItems.Add(todoItem);
+
+            var response = new ApiResponse<TodoItem>
+            {
+                Message = "Todo item created successfully",
+                Success = true,
+                Data = todoItem
+            };
+
+            return CreatedAtAction(nameof(GetTodoItemById), new { id = todoItem.Id }, response);
+        }
+
+        // PUT: api/todo/update/{id}
+        [HttpPut("update/{id}")]
+        public ActionResult<ApiResponse<TodoItem>> UpdateTodoItem(Guid id, [FromBody] TodoItem updatedTodo)
+        {
+            var existingTodo = _todoItems.FirstOrDefault(t => t.Id == id);
+
+            if (existingTodo == null)
+            {
+                return NotFound(new ApiResponse<TodoItem>
+                {
+                    Message = "Todo item not found",
+                    Success = false,
+                    Data = null
+                });
+            }
+
+            existingTodo.Title = updatedTodo.Title;
+            existingTodo.Description = updatedTodo.Description;
+            existingTodo.IsCompleted = updatedTodo.IsCompleted;
+            existingTodo.DueDate = updatedTodo.DueDate;
+            existingTodo.UpdatedAt = DateTime.Now;
+
+            var response = new ApiResponse<TodoItem>
+            {
+                Message = "Todo item updated successfully",
+                Success = true,
+                Data = existingTodo
+            };
+
+            return Ok(response);
+        }
+
+        // DELETE: api/todo/delete/{id}
+        [HttpDelete("delete/{id}")]
+        public ActionResult<ApiResponse<TodoItem>> DeleteTodoItem(Guid id)
+        {
+            var todoItem = _todoItems.FirstOrDefault(t => t.Id == id);
+
+            if (todoItem == null)
+            {
+                return NotFound(new ApiResponse<TodoItem>
+                {
+                    Message = "Todo item not found",
+                    Success = false,
+                    Data = null
+                });
+            }
+
+            _todoItems.Remove(todoItem);
+
+            var response = new ApiResponse<TodoItem>
+            {
+                Message = "Todo item deleted successfully",
+                Success = true,
+                Data = todoItem
+            };
+
+            return Ok(response);
+        }
+
+        // Helper method to get the current user's ID from the claims
+        private int GetCurrentUserId()
+        {
+            // Assuming you are using UserId as the NameIdentifier claim
+            return Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
         }
     }
 }

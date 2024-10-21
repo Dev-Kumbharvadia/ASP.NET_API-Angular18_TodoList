@@ -1,21 +1,19 @@
-﻿namespace test1.Models
+﻿using System;
+
+namespace test1.Models
 {
     public class TodoItem
     {
-        public Guid Id { get; set; } // Unique identifier for each todo item
+        public Guid Id { get; set; } // Maps to Id in the TodoItems table
+        public string Title { get; set; } // Maps to Title
+        public string Description { get; set; } // Maps to Description
+        public bool IsCompleted { get; set; } // Maps to IsCompleted
+        public DateTime? DueDate { get; set; } // Maps to DueDate
+        public DateTime CreatedAt { get; set; } // Maps to CreatedAt
+        public DateTime UpdatedAt { get; set; } // Maps to UpdatedAt
 
-        public string Title { get; set; } // The title of the todo item
-
-        public string Description { get; set; } // Detailed description of the todo item (optional)
-
-        public bool IsCompleted { get; set; } // Indicates whether the task is completed
-
-        public DateTime? DueDate { get; set; } // The due date for the task (optional)
-
-        public DateTime CreatedAt { get; set; } // Timestamp of when the task was created
-
-        public DateTime UpdatedAt { get; set; } // Timestamp of when the task was last updated
-
-        public int? UserId { get; set; } // (Optional) Foreign Key to link to a user
+        // Foreign key for User
+        public int? UserId { get; set; } // Maps to UserId in the TodoItems table (nullable)
+        public User User { get; set; } // Navigation property to User
     }
 }
