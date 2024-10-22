@@ -30,7 +30,7 @@ http = inject(HttpClient);
   }
 
   getJwtAll(){
-    this.http.get('https://localhost:7116/api/Todo/all').subscribe((res: any)=>{
+    this.http.get('https://localhost:7250/api/Todo/all').subscribe((res: any)=>{
       this.todoList = res.data;
     })
   }

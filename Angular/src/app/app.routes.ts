@@ -4,6 +4,7 @@ import { LayoutComponent } from './component/layout/layout.component';
 import { AdminComponent } from './component/admin/admin.component';
 import { TodoComponent } from './component/todo/todo.component';
 import { authGuard } from './guard/auth.guard';
+import { RegisterComponent } from './component/register/register.component';
 
 export const routes: Routes = [
   {
@@ -13,6 +14,10 @@ export const routes: Routes = [
   {
     path: '',
     component: LoginComponent,
+  },
+  {
+    path: 'signup',
+    component: RegisterComponent,
   },
   {
     path: 'layout',
