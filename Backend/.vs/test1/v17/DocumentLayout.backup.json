@@ -3,20 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\Student.AIT-ACER-9-30\\Desktop\\Del\\ASP.NET_API-Angular18_TodoList\\Backend\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|c:\\users\\student.ait-acer-9-30\\desktop\\del\\asp.net_api-angular18_todolist\\backend\\test1\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|solutionrelative:test1\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|c:\\users\\student.ait-acer-9-30\\desktop\\del\\asp.net_api-angular18_todolist\\backend\\test1\\controllers\\todocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|solutionrelative:test1\\controllers\\todocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|c:\\users\\student.ait-acer-9-30\\desktop\\del\\asp.net_api-angular18_todolist\\backend\\test1\\models\\todoitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|solutionrelative:test1\\models\\todoitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|c:\\users\\student.ait-acer-9-30\\desktop\\del\\asp.net_api-angular18_todolist\\backend\\test1\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|solutionrelative:test1\\data\\applicationdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|c:\\users\\student.ait-acer-9-30\\desktop\\del\\asp.net_api-angular18_todolist\\backend\\test1\\models\\entity\\loginaudittable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|solutionrelative:test1\\models\\entity\\loginaudittable.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|c:\\users\\student.ait-acer-9-30\\desktop\\del\\asp.net_api-angular18_todolist\\backend\\test1\\models\\entity\\todoitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|solutionrelative:test1\\models\\entity\\todoitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|c:\\users\\student.ait-acer-9-30\\desktop\\del\\asp.net_api-angular18_todolist\\backend\\test1\\models\\entity\\updatetodo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|solutionrelative:test1\\models\\entity\\updatetodo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|c:\\users\\student.ait-acer-9-30\\desktop\\del\\asp.net_api-angular18_todolist\\backend\\test1\\models\\entity\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|solutionrelative:test1\\models\\entity\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|c:\\users\\student.ait-acer-9-30\\desktop\\del\\asp.net_api-angular18_todolist\\backend\\test1\\models\\entity\\userrole.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -31,16 +35,16 @@
       "RelativeMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|solutionrelative:test1\\models\\entity\\userlogin.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|c:\\users\\student.ait-acer-9-30\\desktop\\del\\asp.net_api-angular18_todolist\\backend\\test1\\models\\entity\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|solutionrelative:test1\\models\\entity\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|c:\\users\\student.ait-acer-9-30\\desktop\\del\\asp.net_api-angular18_todolist\\backend\\test1\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|solutionrelative:test1\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|c:\\users\\student.ait-acer-9-30\\desktop\\del\\asp.net_api-angular18_todolist\\backend\\test1\\models\\entity\\updatetodo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|solutionrelative:test1\\models\\entity\\updatetodo.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|c:\\users\\student.ait-acer-9-30\\desktop\\del\\asp.net_api-angular18_todolist\\backend\\test1\\controllers\\todocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|solutionrelative:test1\\controllers\\todocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|c:\\users\\student.ait-acer-9-30\\desktop\\del\\asp.net_api-angular18_todolist\\backend\\test1\\models\\entity\\todoitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|solutionrelative:test1\\models\\entity\\todoitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|c:\\users\\student.ait-acer-9-30\\desktop\\del\\asp.net_api-angular18_todolist\\backend\\test1\\models\\todoitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|solutionrelative:test1\\models\\todoitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|c:\\users\\student.ait-acer-9-30\\desktop\\del\\asp.net_api-angular18_todolist\\backend\\test1\\models\\entity\\role.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -65,10 +69,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|c:\\users\\student.ait-acer-9-30\\desktop\\del\\asp.net_api-angular18_todolist\\backend\\test1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|solutionrelative:test1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|c:\\users\\student.ait-acer-9-30\\desktop\\del\\asp.net_api-angular18_todolist\\backend\\test1\\migrations\\20241021135740_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{02FD77BE-E535-4148-A44F-EEE400E1EC94}|test1\\test1.csproj|solutionrelative:test1\\migrations\\20241021135740_initialcreate.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -82,7 +82,20 @@
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 1,
+              "Title": "LoginAuditTable.cs",
+              "DocumentMoniker": "C:\\Users\\Student.AIT-ACER-9-30\\Desktop\\Del\\ASP.NET_API-Angular18_TodoList\\Backend\\test1\\Models\\Entity\\LoginAuditTable.cs",
+              "RelativeDocumentMoniker": "test1\\Models\\Entity\\LoginAuditTable.cs",
+              "ToolTip": "C:\\Users\\Student.AIT-ACER-9-30\\Desktop\\Del\\ASP.NET_API-Angular18_TodoList\\Backend\\test1\\Models\\Entity\\LoginAuditTable.cs",
+              "RelativeToolTip": "test1\\Models\\Entity\\LoginAuditTable.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA4AAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-10-22T09:49:56.897Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
               "Title": "JwtSettings.cs",
               "DocumentMoniker": "C:\\Users\\Student.AIT-ACER-9-30\\Desktop\\Del\\ASP.NET_API-Angular18_TodoList\\Backend\\test1\\Models\\Entity\\JwtSettings.cs",
               "RelativeDocumentMoniker": "test1\\Models\\Entity\\JwtSettings.cs",
@@ -90,12 +103,11 @@
               "RelativeToolTip": "test1\\Models\\Entity\\JwtSettings.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-21T13:35:53.533Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-21T13:35:53.533Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 2,
               "Title": "TodoItem.cs",
               "DocumentMoniker": "C:\\Users\\Student.AIT-ACER-9-30\\Desktop\\Del\\ASP.NET_API-Angular18_TodoList\\Backend\\test1\\Models\\Entity\\TodoItem.cs",
               "RelativeDocumentMoniker": "test1\\Models\\Entity\\TodoItem.cs",
@@ -108,7 +120,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "UserRegistration.cs",
               "DocumentMoniker": "C:\\Users\\Student.AIT-ACER-9-30\\Desktop\\Del\\ASP.NET_API-Angular18_TodoList\\Backend\\test1\\Models\\Entity\\UserRegistration.cs",
               "RelativeDocumentMoniker": "test1\\Models\\Entity\\UserRegistration.cs",
@@ -121,33 +133,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "ApplicationDbContext.cs",
               "DocumentMoniker": "C:\\Users\\Student.AIT-ACER-9-30\\Desktop\\Del\\ASP.NET_API-Angular18_TodoList\\Backend\\test1\\Data\\ApplicationDbContext.cs",
               "RelativeDocumentMoniker": "test1\\Data\\ApplicationDbContext.cs",
               "ToolTip": "C:\\Users\\Student.AIT-ACER-9-30\\Desktop\\Del\\ASP.NET_API-Angular18_TodoList\\Backend\\test1\\Data\\ApplicationDbContext.cs",
               "RelativeToolTip": "test1\\Data\\ApplicationDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAcAAAAAAAAAAADwvx0AAAAJAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-08-23T09:38:32.027Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 8,
               "Title": "UserController.cs",
               "DocumentMoniker": "C:\\Users\\Student.AIT-ACER-9-30\\Desktop\\Del\\ASP.NET_API-Angular18_TodoList\\Backend\\test1\\Controllers\\UserController.cs",
               "RelativeDocumentMoniker": "test1\\Controllers\\UserController.cs",
               "ToolTip": "C:\\Users\\Student.AIT-ACER-9-30\\Desktop\\Del\\ASP.NET_API-Angular18_TodoList\\Backend\\test1\\Controllers\\UserController.cs",
               "RelativeToolTip": "test1\\Controllers\\UserController.cs",
-              "ViewState": "AgIAAEoAAAAAAAAAAAAwwFUAAAAcAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFUAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-10-21T13:40:47.397Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 9,
               "Title": "TodoController.cs",
               "DocumentMoniker": "C:\\Users\\Student.AIT-ACER-9-30\\Desktop\\Del\\ASP.NET_API-Angular18_TodoList\\Backend\\test1\\Controllers\\TodoController.cs",
               "RelativeDocumentMoniker": "test1\\Controllers\\TodoController.cs",
@@ -160,7 +172,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "ApiResponse.cs",
               "DocumentMoniker": "C:\\Users\\Student.AIT-ACER-9-30\\Desktop\\Del\\ASP.NET_API-Angular18_TodoList\\Backend\\test1\\Models\\Entity\\ApiResponse.cs",
               "RelativeDocumentMoniker": "test1\\Models\\Entity\\ApiResponse.cs",
@@ -168,24 +180,11 @@
               "RelativeToolTip": "test1\\Models\\Entity\\ApiResponse.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-21T13:21:44.921Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-21T13:21:44.921Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": "20241021135740_InitialCreate.cs",
-              "DocumentMoniker": "C:\\Users\\Student.AIT-ACER-9-30\\Desktop\\Del\\ASP.NET_API-Angular18_TodoList\\Backend\\test1\\Migrations\\20241021135740_InitialCreate.cs",
-              "RelativeDocumentMoniker": "test1\\Migrations\\20241021135740_InitialCreate.cs",
-              "ToolTip": "C:\\Users\\Student.AIT-ACER-9-30\\Desktop\\Del\\ASP.NET_API-Angular18_TodoList\\Backend\\test1\\Migrations\\20241021135740_InitialCreate.cs",
-              "RelativeToolTip": "test1\\Migrations\\20241021135740_InitialCreate.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-21T13:57:40.882Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "AddTodo.cs",
               "DocumentMoniker": "C:\\Users\\Student.AIT-ACER-9-30\\Desktop\\Del\\ASP.NET_API-Angular18_TodoList\\Backend\\test1\\Models\\Entity\\AddTodo.cs",
               "RelativeDocumentMoniker": "test1\\Models\\Entity\\AddTodo.cs",
@@ -193,12 +192,11 @@
               "RelativeToolTip": "test1\\Models\\Entity\\AddTodo.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-21T13:36:13.934Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-21T13:36:13.934Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "UserLogin.cs",
               "DocumentMoniker": "C:\\Users\\Student.AIT-ACER-9-30\\Desktop\\Del\\ASP.NET_API-Angular18_TodoList\\Backend\\test1\\Models\\Entity\\UserLogin.cs",
               "RelativeDocumentMoniker": "test1\\Models\\Entity\\UserLogin.cs",
@@ -211,7 +209,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "UserRole.cs",
               "DocumentMoniker": "C:\\Users\\Student.AIT-ACER-9-30\\Desktop\\Del\\ASP.NET_API-Angular18_TodoList\\Backend\\test1\\Models\\Entity\\UserRole.cs",
               "RelativeDocumentMoniker": "test1\\Models\\Entity\\UserRole.cs",
@@ -224,7 +222,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 4,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\Student.AIT-ACER-9-30\\Desktop\\Del\\ASP.NET_API-Angular18_TodoList\\Backend\\test1\\Models\\Entity\\User.cs",
               "RelativeDocumentMoniker": "test1\\Models\\Entity\\User.cs",
@@ -237,7 +235,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 3,
               "Title": "UpdateTodo.cs",
               "DocumentMoniker": "C:\\Users\\Student.AIT-ACER-9-30\\Desktop\\Del\\ASP.NET_API-Angular18_TodoList\\Backend\\test1\\Models\\Entity\\UpdateTodo.cs",
               "RelativeDocumentMoniker": "test1\\Models\\Entity\\UpdateTodo.cs",
@@ -250,7 +248,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "Role.cs",
               "DocumentMoniker": "C:\\Users\\Student.AIT-ACER-9-30\\Desktop\\Del\\ASP.NET_API-Angular18_TodoList\\Backend\\test1\\Models\\Entity\\Role.cs",
               "RelativeDocumentMoniker": "test1\\Models\\Entity\\Role.cs",
@@ -258,12 +256,11 @@
               "RelativeToolTip": "test1\\Models\\Entity\\Role.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-21T13:19:40.133Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-21T13:19:40.133Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "appsettings.json",
               "DocumentMoniker": "C:\\Users\\Student.AIT-ACER-9-30\\Desktop\\Del\\ASP.NET_API-Angular18_TodoList\\Backend\\test1\\appsettings.json",
               "RelativeDocumentMoniker": "test1\\appsettings.json",
@@ -271,12 +268,11 @@
               "RelativeToolTip": "test1\\appsettings.json",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAABCAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2024-08-23T09:30:57.396Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-23T09:30:57.396Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Student.AIT-ACER-9-30\\Desktop\\Del\\ASP.NET_API-Angular18_TodoList\\Backend\\test1\\Program.cs",
               "RelativeDocumentMoniker": "test1\\Program.cs",
@@ -284,12 +280,11 @@
               "RelativeToolTip": "test1\\Program.cs",
               "ViewState": "AgIAAAMAAAAAAAAAAAAAACIAAAAiAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-08-23T09:35:25.933Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-08-23T09:35:25.933Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 10,
               "Title": "TodoItemDTO.cs",
               "DocumentMoniker": "C:\\Users\\Student.AIT-ACER-9-30\\Desktop\\Del\\ASP.NET_API-Angular18_TodoList\\Backend\\test1\\Models\\TodoItemDTO.cs",
               "RelativeDocumentMoniker": "test1\\Models\\TodoItemDTO.cs",
@@ -297,8 +292,7 @@
               "RelativeToolTip": "test1\\Models\\TodoItemDTO.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAAcAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-20T11:51:19.84Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-20T11:51:19.84Z"
             }
           ]
         }
