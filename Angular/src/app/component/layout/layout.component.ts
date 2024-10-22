@@ -13,6 +13,6 @@ export class LayoutComponent {
   
   onLogOff(){
     this.roter.navigateByUrl('/login')
-    localStorage.removeItem('empErpUser');
+    sessionStorage.removeItem('jwtToken');
   }
 }
