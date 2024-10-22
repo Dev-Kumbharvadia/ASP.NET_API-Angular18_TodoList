@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -11,19 +12,22 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent {
   loginObj: any = {
-    email : '',
+    username : '',
     password: ''
   };
 
   router = inject(Router);
+  http = inject(HttpClient);
 
   onLogin(){
-    if(this.loginObj.email == 'admin@gmail.com' && this.loginObj.password == '112233'){
-      this.router.navigateByUrl('/layout/todo');
-      localStorage.setItem('empErpUser', this.loginObj.email)
-    } else 
-    {
-      alert('wrong credentials')
-    }
+    this.http.post("https://localhost:7116/api/User/login",this.loginObj).subscribe((res:any)=>{
+      if(res.success){
+        alert("login Sucess");
+        sessionStorage.setItem("jwtToken",res.data)
+        this.router.navigateByUrl("layout/todo")
+      } else{
+        alert("errrrr");
+      }
+    })
   }
 }

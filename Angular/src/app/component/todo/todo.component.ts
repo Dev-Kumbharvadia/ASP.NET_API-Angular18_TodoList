@@ -1,14 +1,15 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { TodoListService } from '../../services/todo-list.service';
-import { AsyncPipe, DatePipe } from '@angular/common';
+import { AsyncPipe, DatePipe, JsonPipe } from '@angular/common';
 import { Todo } from '../../model/class';
-import { NgModel } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-todo',
   standalone: true,
-  imports: [AsyncPipe, DatePipe],
+  imports: [AsyncPipe, DatePipe, FormsModule, JsonPipe],
   templateUrl: './todo.component.html',
   styleUrl: './todo.component.css'
 })
@@ -16,12 +17,22 @@ export class TodoComponent implements OnInit {
 
   todoService = inject(TodoListService);
 
+http = inject(HttpClient);
+
   todoList$: Observable<any> = new Observable<any>;
   todoObj: Todo = new Todo();
 
+  todoList: any[] =[];
 
   ngOnInit(): void {
     this.todoList$ = this.todoService.getAllTodo();
+    this.getJwtAll();
+  }
+
+  getJwtAll(){
+    this.http.get('https://localhost:7116/api/Todo/all').subscribe((res: any)=>{
+      this.todoList = res.data;
+    })
   }
 
   updateTodo(){
