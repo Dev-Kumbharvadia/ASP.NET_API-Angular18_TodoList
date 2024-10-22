@@ -1,0 +1,61 @@
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Build Folders
+bin/
+obj/
+
+# User-specific files
+*.user
+*.userosscache
+*.sln.docstates
+
+# ASP.NET Scaffolding
+.scaffolding/
+
+# VS Code files
+.vscode/
+.history/
+
+# Rider
+.idea/
+*.sln.iml
+
+# Visual Studio
+.vs/
+.vscode/
+# Uncomment if you have ReSharper installed
+# _ReSharper*/
+# *.ReSharper
+# *.DotSettings.user
+
+# Windows image file caches
+Thumbs.db
+ehthumbs.db
+
+# Folder config file
+Desktop.ini
+$RECYCLE.BIN/
+
+# Logs
+*.log
+*.tlog
+*.log.json
+
+# NPM Packages
+node_modules/
+
+# Client-side builds
+wwwroot/node_modules/
+wwwroot/dist/
+client/dist/
+client/node_modules/
+
+# Other
+*.DS_Store
+*.lock.json
+
+# For MacOS
+.DS_Store
