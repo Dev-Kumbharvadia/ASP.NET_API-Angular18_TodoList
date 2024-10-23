@@ -31,6 +31,7 @@ namespace TodoAPI.Controllers
         [HttpPost("register")]
         public ActionResult<ApiResponse<User>> Register([FromBody] UserRegisterModel model)
         {
+
             if (_context.Users.Any(u => u.Username == model.Username))
             {
                 return BadRequest(new ApiResponse<User>
@@ -43,17 +44,31 @@ namespace TodoAPI.Controllers
 
             var user = new User
             {
+                UserId = Guid.NewGuid(),
                 Username = model.Username,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.Password),
                 Email = model.Email,
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now
+                CreatedAt = DateTime.UtcNow,
+                UpdatedAt = DateTime.UtcNow
             };
 
             _context.Users.Add(user);
-            _context.SaveChanges();
 
-            return Ok(new ApiResponse<User>
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<User>
+                {
+                    Message = "Error registering user",
+                    Success = false,
+                    Data = null
+                });
+            }
+
+            return CreatedAtAction(nameof(Register), new { id = user.UserId }, new ApiResponse<User>
             {
                 Message = "User registered successfully",
                 Success = true,
@@ -65,7 +80,18 @@ namespace TodoAPI.Controllers
         [HttpPost("login")]
         public ActionResult<ApiResponse<object>> Login([FromBody] UserLoginModel model)
         {
-            var user = _context.Users.Include(u => u.RefreshTokens).SingleOrDefault(u => u.Username == model.Username);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new ApiResponse<object>
+                {
+                    Message = "Invalid input data",
+                    Success = false,
+                    Data = null
+                });
+            }
+
+            var user = _context.Users.Include(u => u.RefreshTokens)
+                .SingleOrDefault(u => u.Username == model.Username);
 
             if (user == null || !BCrypt.Net.BCrypt.Verify(model.Password, user.PasswordHash))
             {
@@ -88,7 +114,21 @@ namespace TodoAPI.Controllers
                 UserId = user.UserId
             });
 
-            _context.SaveChanges();
+            _context.UserAudits.Add(new UserAudit { LoginTime = DateTime.UtcNow, UserId = user.UserId });
+
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<object>
+                {
+                    Message = "Error logging in",
+                    Success = false,
+                    Data = null
+                });
+            }
 
             return Ok(new ApiResponse<object>
             {
@@ -107,7 +147,17 @@ namespace TodoAPI.Controllers
         [HttpPost("refresh-token")]
         public ActionResult<ApiResponse<string>> RefreshToken([FromBody] string refreshToken)
         {
-            var user = _context.Users.Include(u => u.RefreshTokens).SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == refreshToken));
+            if (string.IsNullOrWhiteSpace(refreshToken))
+            {
+                return BadRequest(new ApiResponse<string>
+                {
+                    Success = false,
+                    Message = "Refresh token is required"
+                });
+            }
+
+            var user = _context.Users.Include(u => u.RefreshTokens)
+                .SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == refreshToken));
 
             if (user == null)
             {
@@ -136,7 +186,6 @@ namespace TodoAPI.Controllers
             // Revoke the old refresh token
             storedToken.Revoked = DateTime.UtcNow;
 
-            // Save the new refresh token to the database
             user.RefreshTokens.Add(new RefreshToken
             {
                 Token = newRefreshToken,
@@ -145,7 +194,18 @@ namespace TodoAPI.Controllers
                 UserId = user.UserId
             });
 
-            _context.SaveChanges();
+            try
+            {
+                _context.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<string>
+                {
+                    Success = false,
+                    Message = "Error refreshing token"
+                });
+            }
 
             return Ok(new ApiResponse<string>
             {
@@ -172,7 +232,7 @@ namespace TodoAPI.Controllers
                 issuer: _config["Jwt:Issuer"],
                 audience: _config["Jwt:Audience"],
                 claims: claims,
-                expires: DateTime.Now.AddMinutes(double.Parse(_config["Jwt:ExpiresInMinutes"])),
+                expires: DateTime.UtcNow.AddMinutes(double.Parse(_config["Jwt:ExpiresInMinutes"])),
                 signingCredentials: credentials
             );
 

@@ -4,159 +4,259 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using TodoAPI.Data;
 using TodoAPI.Models;
+using TodoAPI.Models.Entity;
 
 namespace TodoAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    [Authorize] // Apply authorization to the entire controller
     public class TodoController : ControllerBase
     {
-        // For simplicity, we'll use an in-memory list to store todo items.
-        private static List<TodoItem> _todoItems = new List<TodoItem>
+        private readonly ApplicationDbContext _context;
+
+        public TodoController(ApplicationDbContext context)
         {
-            new TodoItem { Id = Guid.NewGuid(), Title = "Task 1", IsCompleted = false, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now },
-            new TodoItem { Id = Guid.NewGuid(), Title = "Task 2", IsCompleted = true, CreatedAt = DateTime.Now, UpdatedAt = DateTime.Now }
-        };
+            _context = context;
+        }
 
         // GET: api/todo/all
         [HttpGet("all")]
         public ActionResult<ApiResponse<List<TodoItem>>> GetAllTodoItems()
         {
-            var response = new ApiResponse<List<TodoItem>>
+            try
             {
-                Message = "Todo items retrieved successfully",
-                Success = true,
-                Data = _todoItems.ToList()
-            };
-            return Ok(response);
+                var todoItems = _context.TodoItems.ToList();
+                return Ok(new ApiResponse<List<TodoItem>>
+                {
+                    Message = "Todo items retrieved successfully",
+                    Success = true,
+                    Data = todoItems
+                });
+            }
+            catch (Exception ex)
+            {
+                // Log the exception (consider using a logging library)
+                return StatusCode(500, new ApiResponse<List<TodoItem>>
+                {
+                    Message = "Error retrieving todo items",
+                    Success = false,
+                    Data = null
+                });
+            }
         }
 
         // GET: api/todo/{id}
         [HttpGet("{id}")]
         public ActionResult<ApiResponse<TodoItem>> GetTodoItemById(Guid id)
         {
-            var todoItem = _todoItems.FirstOrDefault(t => t.Id == id);
-
-            if (todoItem == null)
+            try
             {
-                return NotFound(new ApiResponse<TodoItem>
+                var todoItem = _context.TodoItems.Find(id);
+
+                if (todoItem == null)
                 {
-                    Message = "Todo item not found",
+                    return NotFound(new ApiResponse<TodoItem>
+                    {
+                        Message = "Todo item not found",
+                        Success = false,
+                        Data = null
+                    });
+                }
+
+                return Ok(new ApiResponse<TodoItem>
+                {
+                    Message = "Todo item retrieved successfully",
+                    Success = true,
+                    Data = todoItem
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<TodoItem>
+                {
+                    Message = "Error retrieving todo item",
                     Success = false,
                     Data = null
                 });
             }
+        }
 
-            return Ok(new ApiResponse<TodoItem>
+        // GET: api/todo/user/{userId}
+        [HttpGet("user/{userId}")]
+        public ActionResult<ApiResponse<List<TodoItem>>> GetTodoItemsByUserId(Guid userId)
+        {
+            try
             {
-                Message = "Todo item retrieved successfully",
-                Success = true,
-                Data = todoItem
-            });
+                var todoItems = _context.TodoItems.Where(t => t.UserId == userId).ToList();
+
+                if (!todoItems.Any())
+                {
+                    return NotFound(new ApiResponse<List<TodoItem>>
+                    {
+                        Message = "No todo items found for this user",
+                        Success = false,
+                        Data = null
+                    });
+                }
+
+                return Ok(new ApiResponse<List<TodoItem>>
+                {
+                    Message = "Todo items retrieved successfully",
+                    Success = true,
+                    Data = todoItems
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<List<TodoItem>>
+                {
+                    Message = "Error retrieving todo items",
+                    Success = false,
+                    Data = null
+                });
+            }
         }
 
         // POST: api/todo/create
         [HttpPost("create")]
         public ActionResult<ApiResponse<TodoItem>> CreateTodoItem([FromBody] AddTodo newTodo)
         {
-            // Create a new TodoItem and associate it with the current user
-            var todoItem = new TodoItem
+            if (newTodo == null)
             {
-                Id = Guid.NewGuid(),
-                Title = newTodo.Title,
-                Description = newTodo.Description,
-                IsCompleted = false,
-                CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now
-            };
-
-            _todoItems.Add(todoItem);
-
-            var response = new ApiResponse<TodoItem>
-            {
-                Message = "Todo item created successfully",
-                Success = true,
-                Data = todoItem
-            };
-
-            return CreatedAtAction(nameof(GetTodoItemById), new { id = todoItem.Id }, response);
-        }
-
-        // PUT: api/todo/update/{id}
-        [HttpPut("update/{id}")]
-        public ActionResult<ApiResponse<TodoItem>> UpdateTodoItem(Guid id, [FromBody] TodoItem updatedTodo)
-        {
-            var existingTodo = _todoItems.FirstOrDefault(t => t.Id == id);
-
-            if (existingTodo == null)
-            {
-                return NotFound(new ApiResponse<TodoItem>
+                return BadRequest(new ApiResponse<TodoItem>
                 {
-                    Message = "Todo item not found",
+                    Message = "Invalid input data",
                     Success = false,
                     Data = null
                 });
             }
 
-            existingTodo.Title = updatedTodo.Title;
-            existingTodo.Description = updatedTodo.Description;
-            existingTodo.IsCompleted = updatedTodo.IsCompleted;
-            existingTodo.DueDate = updatedTodo.DueDate;
-            existingTodo.UpdatedAt = DateTime.Now;
-
-            var response = new ApiResponse<TodoItem>
+            try
             {
-                Message = "Todo item updated successfully",
-                Success = true,
-                Data = existingTodo
-            };
+                var todoItem = new TodoItem
+                {
+                    Id = Guid.NewGuid(),
+                    Title = newTodo.Title,
+                    Description = newTodo.Description,
+                    IsCompleted = newTodo.IsCompleted,
+                    CreatedAt = DateTime.UtcNow,
+                    UpdatedAt = DateTime.UtcNow,
+                    UserId = newTodo.UserId // Automatically associate with current user
+                };
 
-            return Ok(response);
+                _context.TodoItems.Add(todoItem);
+                _context.SaveChanges();
+
+                return CreatedAtAction(nameof(GetTodoItemById), new { id = todoItem.Id }, new ApiResponse<TodoItem>
+                {
+                    Message = "Todo item created successfully",
+                    Success = true,
+                    Data = todoItem
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<TodoItem>
+                {
+                    Message = "Error creating Todo item",
+                    Success = false,
+                    Data = null
+                });
+            }
+        }
+
+        // PUT: api/todo/update/{id}
+        [HttpPut("update/{id}")]
+        public ActionResult<ApiResponse<TodoItem>> UpdateTodoItem(Guid id, [FromBody] UpdateTodo updatedTodo)
+        {
+            if (!ModelState.IsValid || updatedTodo == null)
+            {
+                return BadRequest(new ApiResponse<TodoItem>
+                {
+                    Message = "Invalid data",
+                    Success = false,
+                    Data = null
+                });
+            }
+
+            try
+            {
+                var existingTodo = _context.TodoItems.Find(id);
+                if (existingTodo == null)
+                {
+                    return NotFound(new ApiResponse<TodoItem>
+                    {
+                        Message = "Todo item not found",
+                        Success = false,
+                        Data = null
+                    });
+                }
+
+                // Update the todo item properties
+                existingTodo.Title = updatedTodo.Title;
+                existingTodo.Description = updatedTodo.Description;
+                existingTodo.IsCompleted = updatedTodo.IsCompleted;
+                existingTodo.DueDate = updatedTodo.DueDate;
+                existingTodo.UpdatedAt = DateTime.UtcNow;
+
+                _context.SaveChanges();
+
+                return Ok(new ApiResponse<TodoItem>
+                {
+                    Message = "Todo item updated successfully",
+                    Success = true,
+                    Data = existingTodo
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<TodoItem>
+                {
+                    Message = "Error updating Todo item",
+                    Success = false,
+                    Data = null
+                });
+            }
         }
 
         // DELETE: api/todo/delete/{id}
         [HttpDelete("delete/{id}")]
         public ActionResult<ApiResponse<TodoItem>> DeleteTodoItem(Guid id)
         {
-            var todoItem = _todoItems.FirstOrDefault(t => t.Id == id);
-
-            if (todoItem == null)
+            try
             {
-                return NotFound(new ApiResponse<TodoItem>
+                var todoItem = _context.TodoItems.Find(id);
+                if (todoItem == null)
                 {
-                    Message = "Todo item not found",
+                    return NotFound(new ApiResponse<TodoItem>
+                    {
+                        Message = "Todo item not found",
+                        Success = false,
+                        Data = null
+                    });
+                }
+
+                _context.TodoItems.Remove(todoItem);
+                _context.SaveChanges();
+
+                return Ok(new ApiResponse<TodoItem>
+                {
+                    Message = "Todo item deleted successfully",
+                    Success = true,
+                    Data = todoItem
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new ApiResponse<TodoItem>
+                {
+                    Message = "Error deleting Todo item",
                     Success = false,
                     Data = null
                 });
             }
-
-            _todoItems.Remove(todoItem);
-
-            var response = new ApiResponse<TodoItem>
-            {
-                Message = "Todo item deleted successfully",
-                Success = true,
-                Data = todoItem
-            };
-
-            return Ok(response);
         }
-
-        // Helper method to get the current user's ID from the claims
-        private Guid GetCurrentUserId()
-        {
-            // Assuming the UserId is stored as a GUID in the NameIdentifier claim
-            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
-            if (!Guid.TryParse(userIdString, out Guid userId))
-            {
-                throw new InvalidOperationException("Invalid User ID");
-            }
-
-            return userId;
-        }
-
     }
 }

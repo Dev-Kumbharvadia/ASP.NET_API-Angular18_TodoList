@@ -1,120 +1,131 @@
 <div class="flex flex-col md:flex-row h-screen">
-    <!-- Left Side: Form -->
-    <div class="md:w-1/2 w-full p-5">
-        <h1 class="py-10 font-extrabold text-4xl md:text-5xl">To-Do List</h1>
-  
+  <!-- Left Side: Form -->
+  <div class="md:w-1/2 w-full p-5">
+    <h1 class="py-10 font-extrabold text-4xl md:text-5xl">To-Do List</h1>
         <div class="mt-4">
-          <label for="title" class="font-bold">Task Title</label>
-          <input
-            id="title"
-            type="text"
-            class="w-full p-2 border border-gray-300 rounded-md mt-2 focus:ring focus:ring-indigo-200 focus:border-indigo-500"
-            required
-            aria-label="Task Title"
-            name="title"
-            [(ngModel)]="todoObj.title"
-          />
+            <label for="title" class="font-bold">Task Title</label>
+            <input
+                id="title"
+                type="text"
+                class="w-full p-2 border border-gray-300 rounded-md mt-2 focus:ring focus:ring-indigo-200 focus:border-indigo-500"
+                required
+                name="title"
+                [(ngModel)]="todoObj.title"
+            />
         </div>
-  
+
         <div class="mt-4">
-          <label for="description" class="font-bold">Description</label>
-          <textarea
-            id="description"
-            class="w-full p-2 border border-gray-300 rounded-md mt-2 focus:ring focus:ring-indigo-200 focus:border-indigo-500"
-            rows="3"
-            placeholder="Optional"
-            aria-label="Task Description"
-            [(ngModel)]="todoObj.description"
-          ></textarea>
+            <label for="description" class="font-bold">Description</label>
+            <textarea
+                id="description"
+                class="w-full p-2 border border-gray-300 rounded-md mt-2 focus:ring focus:ring-indigo-200 focus:border-indigo-500"
+                rows="3"
+                placeholder="Optional"
+                [(ngModel)]="todoObj.description"
+            ></textarea>
         </div>
-  
+
         <div class="mt-4">
-          <label for="dueDate" class="font-bold">Due Date</label>
-          <input
-            id="dueDate"
-            type="date"
-            class="w-full p-2 border border-gray-300 rounded-md mt-2 focus:ring focus:ring-indigo-200 focus:border-indigo-500"
-            aria-label="Due Date"
-            [(ngModel)]="todoObj.dueDate"
-          />
+            <label for="dueDate" class="font-bold">Due Date</label>
+            <input
+                id="dueDate"
+                type="date"
+                class="w-full p-2 border border-gray-300 rounded-md mt-2 focus:ring focus:ring-indigo-200 focus:border-indigo-500"
+                [(ngModel)]="todoObj.dueDate"
+                required
+            />
         </div>
-  
+
         <div class="mt-4 flex items-center">
-          <input
-            id="isCompleted"
-            type="checkbox"
-            class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring focus:ring-indigo-200"
-            [(ngModel)]="todoObj.isCompleted"
-          />
-          <label for="isCompleted" class="ml-2 font-bold">Completed</label>
+            <input
+                id="isCompleted"
+                type="checkbox"
+                class="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring focus:ring-indigo-200"
+                [(ngModel)]="todoObj.isCompleted"
+            />
+            <label for="isCompleted" class="ml-2 font-bold">Completed</label>
         </div>
-  
-        <div class="mt-6">
+
+        <div class="mt-6 flex gap-4">
           <button
-            type="submit"
-            class="bg-indigo-600 text-white px-4 py-2 rounded-md w-full hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400"
-            (click)="addTodo()"
+              type="button" 
+              class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400"
+              (click)="onUpdate()"
           >
-            {{ todoObj.id ? 'Update Item':'Add Item'}}
+             Update
+          </button>
+          <button
+              type="button"
+              class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400"
+              (click)="resetForm()"
+          >
+              Reset
+          </button>
+          <button
+              type="button" 
+              class="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-green-400"
+              (click)="addTodo()"
+          >
+              Submit
           </button>
         </div>
-    </div>
-  
-    <!-- Right Side: Task List -->
-    <div class="md:w-1/2 w-full p-5 overflow-auto">
+</div>
+
+  <!-- Right Side: Task List -->
+  <div class="md:w-1/2 w-full p-5 overflow-auto">
       <ul class="space-y-4">
-        @for (item of todoList ; track $index) {
-            <li class="border-b pb-4">
-              <span class="font-bold text-xl">{{item.title}}</span>
-              <p class="text-sm text-gray-600">{{item.description}}</p>
-      
+        @for (item of todoList; track $index) {
+          <li  class="border-b pb-4">
+              <span class="font-bold text-xl">{{ item.title }}</span>
+              <p class="text-sm text-gray-600">{{ item.description }}</p>
+
               <div class="flex items-center gap-10 mt-4">
-                <!-- Due Date -->
-                <span class="flex items-center text-gray-500">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    class="h-6 w-6"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M12 6V3m0 18v-3m8.25 1.75h-16.5a2.25 2.25 0 01-2.25-2.25V5.25A2.25 2.25 0 014.5 3h15a2.25 2.25 0 012.25 2.25v15a2.25 2.25 0 01-2.25 2.25z"
-                    />
-                  </svg>
-                  <span class="ml-2">Due: {{item.dueDate | date}}</span>
-                </span>
-      
-                <!-- Completed Status -->
-                <span class="flex items-center text-gray-500">
-                  <span class="ml-2">
-                    Completed: {{ item.isCompleted ?'Completed':'Not Completed' }}
+                  <!-- Due Date -->
+                  <span class="flex items-center text-gray-500">
+                      <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke-width="1.5"
+                          stroke="currentColor"
+                          class="h-6 w-6"
+                      >
+                          <path
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              d="M12 6V3m0 18v-3m8.25 1.75h-16.5a2.25 2.25 0 01-2.25-2.25V5.25A2.25 2.25 0 014.5 3h15a2.25 2.25 0 012.25 2.25v15a2.25 2.25 0 01-2.25 2.25z"
+                          />
+                      </svg>
+                      <span class="ml-2">Due: {{ item.dueDate | date }}</span>
                   </span>
-                </span>
+
+                  <!-- Completed Status -->
+                  <span class="flex items-center text-gray-500">
+                      <span class="ml-2">
+                          Completed: {{ item.isCompleted ? 'Completed' : 'Not Completed' }}
+                      </span>
+                  </span>
               </div>
-      
+
               <div class="mt-4 flex gap-4">
-                <button
-                  class="bg-emerald-400 text-white py-2 px-4 rounded-md hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-300"
-                  aria-label="Edit Task"
-                  (click)="onEdit(item)"
-                >
-                  Edit
-                </button>
-                <button
-                  class="bg-red-400 text-white py-2 px-4 rounded-md hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-300"
-                  type="button"
-                  aria-label="Delete Task"
-                  (click)="onDelete(item.id)"
-                >
-                  Delete
-                </button>
+                  <button
+                      class="bg-emerald-400 text-white py-2 px-4 rounded-md hover:bg-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-300"
+                      aria-label="Edit Task"
+                      (click)="onEdit(item)"
+                  >
+                      Edit
+                  </button>
+                  <button
+                      class="bg-red-400 text-white py-2 px-4 rounded-md hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-300"
+                      type="button"
+                      aria-label="Delete Task"
+                      (click)="onDelete(item.id)"
+                  >
+                      Delete
+                  </button>
               </div>
-            </li>
+          </li>
         }
       </ul>
-    </div>
   </div>
+</div>

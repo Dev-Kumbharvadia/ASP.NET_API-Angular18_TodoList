@@ -13,7 +13,7 @@ export class AuthService {
   private refreshTokenKey = 'refreshToken';
   private jwtTokenKey = 'jwtToken';
   private userIdKey = 'UserId';
-  USER_ID: any = '';
+  USER_ID: string | null = this.getUserId();
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -32,7 +32,7 @@ export class AuthService {
     sessionStorage.setItem(this.jwtTokenKey, token);
   }
 
-  setUserId(data: string){
+  setUserId(data: any){
     sessionStorage.setItem(this.userIdKey, data)
   }
 
@@ -59,7 +59,7 @@ export class AuthService {
         if (response && response.success) {
           this.setJwtToken(response.data.jwtToken); // Assuming new JWT is in `response.data.JwtToken`
           this.setRefreshToken(response.data.RefreshToken); // Assuming refresh token is in `response.data.RefreshToken`
-          this.setUserId(response.userId);
+          this.setUserId(response.data.userId); 
         }
       }),
       catchError(error => {

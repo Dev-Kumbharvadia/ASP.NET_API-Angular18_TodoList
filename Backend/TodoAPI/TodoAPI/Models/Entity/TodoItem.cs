@@ -4,16 +4,16 @@ namespace TodoAPI.Models
 {
     public class TodoItem
     {
-        public Guid Id { get; set; } // Primary key for the TodoItems table
-        public string Title { get; set; } // Maps to Title
-        public string Description { get; set; } // Maps to Description
-        public bool IsCompleted { get; set; } // Maps to IsCompleted
-        public DateTime? DueDate { get; set; } // Maps to DueDate
-        public DateTime CreatedAt { get; set; } // Maps to CreatedAt
-        public DateTime UpdatedAt { get; set; } // Maps to UpdatedAt
+        public Guid Id { get; set; } // Primary key
+        public string Title { get; set; } // Title of the todo item
+        public string Description { get; set; } // Description of the todo item
+        public bool IsCompleted { get; set; } // Indicates if the item is completed
+        public DateTime? DueDate { get; set; } // Due date for the item
+        public DateTime CreatedAt { get; set; } // Created timestamp
+        public DateTime UpdatedAt { get; set; } // Updated timestamp
 
         // Foreign key for User
-        public Guid? UserId { get; set; } // Foreign key for User (nullable)
+        public Guid? UserId { get; set; } // Nullable Foreign key
         public User User { get; set; } // Navigation property to User
     }
 }

@@ -19,4 +19,6 @@ export class LayoutComponent {
     // Call the logout method from AuthService
     this.authService.logout(); // No need to pass userId, logout handles it internally
   }
+
+  
 }

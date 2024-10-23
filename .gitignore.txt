@@ -6,22 +6,22 @@
 *.sln.docstates
 
 # Build Folders
-bin/
-obj/
-out/
-publish/
+Backend/TodoAPI/TodoAPI/bin/
+Backend/TodoAPI/TodoAPI/obj/
+Backend/TodoAPI/TodoAPI/out/
+Backend/TodoAPI/TodoAPI/publish/
 
 # NuGet Packages
 *.nupkg
 *.snupkg
-packages/
+Backend/TodoAPI/TodoAPI/packages/
 *.symbols.nupkg
 
 # Logs
-*.log
+Backend/TodoAPI/TodoAPI/**/*.log
 
 # User secrets
-secrets.json
+Backend/TodoAPI/TodoAPI/secrets.json
 
 # VS Code settings
 .vscode/
@@ -44,4 +44,4 @@ coverage/
 dotnet-tools.json
 
 # Local development environment
-appsettings.Development.json
+Backend/TodoAPI/TodoAPI/appsettings.Development.json
