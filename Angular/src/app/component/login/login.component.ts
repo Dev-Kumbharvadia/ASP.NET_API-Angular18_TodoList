@@ -1,8 +1,7 @@
-import { HttpClient } from '@angular/common/http';
-import { Component, EventEmitter, inject, Output } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
-import { LoginService } from '../../services/login.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -16,32 +15,24 @@ export class LoginComponent {
     username: '',
     password: '',
   };
-  
-  loginServices = inject(LoginService)
 
+  authService = inject(AuthService);
   router = inject(Router);
-  http = inject(HttpClient);
 
   onLogin() {
-    this.http
-      .post('https://localhost:7250/api/User/login', this.loginObj)
-      .subscribe(
-        (res: any) => {
-          if (res.success) {
-            alert('Login Success');
-            sessionStorage.setItem('jwtToken', res.data);
-            this.router.navigateByUrl('layout/todo');
-            this.loginServices.USER_ID = res.message;
-          } else {
-            alert('Error occurred');
-          }
-        },
-        (error) => {
-          console.error('Error:', error); // Log the error to troubleshoot
-          alert('Error in login request');
+    this.authService.login(this.loginObj.username, this.loginObj.password).subscribe(
+      (res: any) => {
+        if (res && res.success) {
+          alert('Login Success');
+          this.router.navigateByUrl('layout/todo'); // Navigate to dashboard
+        } else {
+          alert(res.message || 'Login failed');
         }
-      );
+      },
+      (error) => {
+        console.error('Error:', error); // Log error for debugging
+        alert('Error in login request');
+      }
+    );
   }
-
-
 }

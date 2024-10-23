@@ -5,6 +5,7 @@ import { AsyncPipe, DatePipe, JsonPipe } from '@angular/common';
 import { Todo } from '../../model/class';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-todo',
@@ -16,6 +17,7 @@ import { HttpClient } from '@angular/common/http';
 export class TodoComponent implements OnInit {
 
   todoService = inject(TodoListService);
+  authService = inject(AuthService);
 
   http = inject(HttpClient);
 
@@ -39,7 +41,7 @@ export class TodoComponent implements OnInit {
   }
   
   getById(){
-    this.http.get('https://localhost:7250/api/Todo/',{}).subscribe((res: any) => {
+    this.http.get('https://localhost:7250/api/Todo/',this.authService.USER_ID).subscribe((res: any) => {
       this.todoList = res.data; // Assuming the response contains a data array
     }, (error: any) => {
       console.error('Error fetching todos:', error);

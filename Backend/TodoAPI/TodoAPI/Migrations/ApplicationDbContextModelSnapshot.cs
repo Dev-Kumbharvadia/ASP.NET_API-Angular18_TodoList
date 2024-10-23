@@ -22,6 +22,35 @@ namespace TodoAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("TodoAPI.Models.Entity.RefreshToken", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("Created")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Expires")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("Revoked")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Token")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("RefreshTokens");
+                });
+
             modelBuilder.Entity("TodoAPI.Models.Entity.UserAudit", b =>
                 {
                     b.Property<Guid>("UserAuditId")
@@ -139,6 +168,17 @@ namespace TodoAPI.Migrations
                     b.ToTable("UserRoles");
                 });
 
+            modelBuilder.Entity("TodoAPI.Models.Entity.RefreshToken", b =>
+                {
+                    b.HasOne("TodoAPI.Models.User", "User")
+                        .WithMany("RefreshTokens")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("TodoAPI.Models.Entity.UserAudit", b =>
                 {
                     b.HasOne("TodoAPI.Models.User", "User")
@@ -186,6 +226,8 @@ namespace TodoAPI.Migrations
 
             modelBuilder.Entity("TodoAPI.Models.User", b =>
                 {
+                    b.Navigation("RefreshTokens");
+
                     b.Navigation("TodoItems");
 
                     b.Navigation("UserAudits");

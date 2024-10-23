@@ -2,15 +2,15 @@
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
-using BCrypt.Net; // Ensure you have installed the BCrypt.Net-Next package
+using BCrypt.Net;
 using TodoAPI.Models;
 using TodoAPI.Data;
 using TodoAPI.Models.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System.Linq;
 
 namespace TodoAPI.Controllers
 {
@@ -63,13 +63,13 @@ namespace TodoAPI.Controllers
 
         // POST: api/user/login
         [HttpPost("login")]
-        public ActionResult<ApiResponse<string>> Login([FromBody] UserLoginModel model)
+        public ActionResult<ApiResponse<object>> Login([FromBody] UserLoginModel model)
         {
-            var user = _context.Users.SingleOrDefault(u => u.Username == model.Username);
+            var user = _context.Users.Include(u => u.RefreshTokens).SingleOrDefault(u => u.Username == model.Username);
 
             if (user == null || !BCrypt.Net.BCrypt.Verify(model.Password, user.PasswordHash))
             {
-                return Unauthorized(new ApiResponse<string>
+                return Unauthorized(new ApiResponse<object>
                 {
                     Message = "Invalid credentials",
                     Success = false,
@@ -77,28 +77,85 @@ namespace TodoAPI.Controllers
                 });
             }
 
-            var token = GenerateJwtToken(user);
+            var jwtToken = GenerateJwtToken(user);
+            var refreshToken = GenerateRefreshToken();
 
-            // Log user login into the UserAudit table
-            var userAudit = new UserAudit
+            user.RefreshTokens.Add(new RefreshToken
             {
-                UserId = user.UserId,
-                LoginTime = DateTime.Now,
-                LogoutTime = null
-            };
+                Token = refreshToken,
+                Expires = DateTime.UtcNow.AddDays(7),
+                Created = DateTime.UtcNow,
+                UserId = user.UserId
+            });
 
-            _context.UserAudits.Add(userAudit);
-            _context.SaveChanges(); // Save the audit record to the database
+            _context.SaveChanges();
 
-            return Ok(new ApiResponse<string>
+            return Ok(new ApiResponse<object>
             {
-                Message = Convert.ToString(user.UserId),
+                Message = "Login successful",
                 Success = true,
-                Data = token
-                   
+                Data = new
+                {
+                    JwtToken = jwtToken,
+                    RefreshToken = refreshToken,
+                    UserId = user.UserId
+                }
             });
         }
 
+        // POST: api/user/refresh-token
+        [HttpPost("refresh-token")]
+        public ActionResult<ApiResponse<string>> RefreshToken([FromBody] string refreshToken)
+        {
+            var user = _context.Users.Include(u => u.RefreshTokens).SingleOrDefault(u => u.RefreshTokens.Any(t => t.Token == refreshToken));
+
+            if (user == null)
+            {
+                return Unauthorized(new ApiResponse<string>
+                {
+                    Success = false,
+                    Message = "Invalid refresh token"
+                });
+            }
+
+            var storedToken = user.RefreshTokens.Single(t => t.Token == refreshToken);
+
+            if (!storedToken.IsActive)
+            {
+                return Unauthorized(new ApiResponse<string>
+                {
+                    Success = false,
+                    Message = "Token expired or revoked"
+                });
+            }
+
+            // Generate new JWT and refresh token
+            var newJwtToken = GenerateJwtToken(user);
+            var newRefreshToken = GenerateRefreshToken();
+
+            // Revoke the old refresh token
+            storedToken.Revoked = DateTime.UtcNow;
+
+            // Save the new refresh token to the database
+            user.RefreshTokens.Add(new RefreshToken
+            {
+                Token = newRefreshToken,
+                Expires = DateTime.UtcNow.AddDays(7),
+                Created = DateTime.UtcNow,
+                UserId = user.UserId
+            });
+
+            _context.SaveChanges();
+
+            return Ok(new ApiResponse<string>
+            {
+                Success = true,
+                Message = "Token refreshed successfully",
+                Data = newJwtToken
+            });
+        }
+
+        // Generate JWT token
         private string GenerateJwtToken(User user)
         {
             var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
@@ -120,6 +177,17 @@ namespace TodoAPI.Controllers
             );
 
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        // Generate refresh token
+        private string GenerateRefreshToken()
+        {
+            var randomBytes = new byte[64];
+            using (var rng = new System.Security.Cryptography.RNGCryptoServiceProvider())
+            {
+                rng.GetBytes(randomBytes);
+                return Convert.ToBase64String(randomBytes);
+            }
         }
     }
 }
