@@ -22,13 +22,33 @@ namespace TodoAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("TodoAPI.Models.Entity.UserAudit", b =>
+                {
+                    b.Property<Guid>("UserAuditId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("LoginTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("LogoutTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("UserAuditId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("UserAudits");
+                });
+
             modelBuilder.Entity("TodoAPI.Models.Role", b =>
                 {
-                    b.Property<int>("RoleId")
+                    b.Property<Guid>("RoleId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("RoleName")
                         .IsRequired()
@@ -65,8 +85,8 @@ namespace TodoAPI.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
@@ -77,11 +97,9 @@ namespace TodoAPI.Migrations
 
             modelBuilder.Entity("TodoAPI.Models.User", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<Guid>("UserId")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("UserId"));
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("datetime2");
@@ -108,11 +126,11 @@ namespace TodoAPI.Migrations
 
             modelBuilder.Entity("TodoAPI.Models.UserRole", b =>
                 {
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("RoleId")
-                        .HasColumnType("int");
+                    b.Property<Guid>("RoleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("UserId", "RoleId");
 
@@ -121,11 +139,23 @@ namespace TodoAPI.Migrations
                     b.ToTable("UserRoles");
                 });
 
+            modelBuilder.Entity("TodoAPI.Models.Entity.UserAudit", b =>
+                {
+                    b.HasOne("TodoAPI.Models.User", "User")
+                        .WithMany("UserAudits")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("TodoAPI.Models.TodoItem", b =>
                 {
                     b.HasOne("TodoAPI.Models.User", "User")
                         .WithMany("TodoItems")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.SetNull);
 
                     b.Navigation("User");
                 });
@@ -157,6 +187,8 @@ namespace TodoAPI.Migrations
             modelBuilder.Entity("TodoAPI.Models.User", b =>
                 {
                     b.Navigation("TodoItems");
+
+                    b.Navigation("UserAudits");
 
                     b.Navigation("UserRoles");
                 });

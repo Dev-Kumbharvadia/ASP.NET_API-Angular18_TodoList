@@ -4,7 +4,7 @@ namespace TodoAPI.Models
 {
     public class TodoItem
     {
-        public Guid Id { get; set; } // Maps to Id in the TodoItems table
+        public Guid Id { get; set; } // Primary key for the TodoItems table
         public string Title { get; set; } // Maps to Title
         public string Description { get; set; } // Maps to Description
         public bool IsCompleted { get; set; } // Maps to IsCompleted
@@ -13,7 +13,7 @@ namespace TodoAPI.Models
         public DateTime UpdatedAt { get; set; } // Maps to UpdatedAt
 
         // Foreign key for User
-        public int? UserId { get; set; } // Maps to UserId in the TodoItems table (nullable)
+        public Guid? UserId { get; set; } // Foreign key for User (nullable)
         public User User { get; set; } // Navigation property to User
     }
 }

@@ -1,9 +1,6 @@
-<div>{{todoList | json}}</div>
-
 <div class="flex flex-col md:flex-row h-screen">
     <!-- Left Side: Form -->
     <div class="md:w-1/2 w-full p-5">
-      <form>
         <h1 class="py-10 font-extrabold text-4xl md:text-5xl">To-Do List</h1>
   
         <div class="mt-4">
@@ -58,16 +55,15 @@
             class="bg-indigo-600 text-white px-4 py-2 rounded-md w-full hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-400"
             (click)="addTodo()"
           >
-            Add Task
+            {{ todoObj.id ? 'Update Item':'Add Item'}}
           </button>
         </div>
-      </form>
     </div>
   
     <!-- Right Side: Task List -->
     <div class="md:w-1/2 w-full p-5 overflow-auto">
       <ul class="space-y-4">
-        @for (item of todoList$ | async ; track $index) {
+        @for (item of todoList ; track $index) {
             <li class="border-b pb-4">
               <span class="font-bold text-xl">{{item.title}}</span>
               <p class="text-sm text-gray-600">{{item.description}}</p>
@@ -112,7 +108,7 @@
                   class="bg-red-400 text-white py-2 px-4 rounded-md hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-red-300"
                   type="button"
                   aria-label="Delete Task"
-                  (click)="deleteTodo(item.id)"
+                  (click)="onDelete(item.id)"
                 >
                   Delete
                 </button>

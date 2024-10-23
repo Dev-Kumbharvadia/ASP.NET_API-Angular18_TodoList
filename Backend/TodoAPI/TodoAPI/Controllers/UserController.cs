@@ -1,15 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using BCrypt.Net; // Ensure you have installed the BCrypt.Net-Next package
 using TodoAPI.Models;
 using TodoAPI.Data;
+using TodoAPI.Models.Entity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.Linq;
 
 namespace TodoAPI.Controllers
 {
@@ -42,7 +43,6 @@ namespace TodoAPI.Controllers
 
             var user = new User
             {
-                UserId = 0, // The database will auto-increment this
                 Username = model.Username,
                 PasswordHash = BCrypt.Net.BCrypt.HashPassword(model.Password),
                 Email = model.Email,
@@ -79,11 +79,23 @@ namespace TodoAPI.Controllers
 
             var token = GenerateJwtToken(user);
 
+            // Log user login into the UserAudit table
+            var userAudit = new UserAudit
+            {
+                UserId = user.UserId,
+                LoginTime = DateTime.Now,
+                LogoutTime = null
+            };
+
+            _context.UserAudits.Add(userAudit);
+            _context.SaveChanges(); // Save the audit record to the database
+
             return Ok(new ApiResponse<string>
             {
-                Message = "Login successful",
+                Message = Convert.ToString(user.UserId),
                 Success = true,
                 Data = token
+                   
             });
         }
 

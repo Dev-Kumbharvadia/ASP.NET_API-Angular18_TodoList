@@ -69,8 +69,7 @@ namespace TodoAPI.Controllers
                 Description = newTodo.Description,
                 IsCompleted = false,
                 CreatedAt = DateTime.Now,
-                UpdatedAt = DateTime.Now,
-                UserId = GetCurrentUserId() // Associate with the current user's ID
+                UpdatedAt = DateTime.Now
             };
 
             _todoItems.Add(todoItem);
@@ -146,10 +145,18 @@ namespace TodoAPI.Controllers
         }
 
         // Helper method to get the current user's ID from the claims
-        private int GetCurrentUserId()
+        private Guid GetCurrentUserId()
         {
-            // Assuming you are using UserId as the NameIdentifier claim
-            return Convert.ToInt32(User.FindFirstValue(ClaimTypes.NameIdentifier));
+            // Assuming the UserId is stored as a GUID in the NameIdentifier claim
+            var userIdString = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            if (!Guid.TryParse(userIdString, out Guid userId))
+            {
+                throw new InvalidOperationException("Invalid User ID");
+            }
+
+            return userId;
         }
+
     }
 }
